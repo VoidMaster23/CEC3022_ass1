@@ -14,6 +14,9 @@
 
 
 namespace SHVNKA005 {
+std::regex tag ("<[^\\s*].+?>");
+std::regex closingTag("</[^\\s*].+?>");
+
   void readFile(string fileName, str_queue &inQueue, tag_vector &outVect) {
     std::ifstream in(fileName);
 
@@ -36,10 +39,11 @@ void processLine(string line, str_queue &inQueue, tag_vector &outVect) {
 string text = "";
 string tagText ="";
 
-std::regex tag ("<[^\\s*].+?>");
+
 //loop through each character 
 
 if(line[0] != '<' && line[0] != '\t') {
+        line.replace(line.size()-1, 1, "");
         inQueue.push(line);
     } else {
 
@@ -71,16 +75,10 @@ if(line[0] != '<' && line[0] != '\t') {
             }
 
             // at this point place the tag into the queue
-            
-
             if (!std::regex_match(text, tag)) {
             inQueue.push(text);
-            
-            std::cout << text << std::endl;
-            std::cout << std::endl;
             }
 
-            std::cout << tagText << std::endl;
             inQueue.push(tagText);
 
 
@@ -98,11 +96,46 @@ if(line[0] != '<' && line[0] != '\t') {
 
 
 void prepareOutput(str_queue &inputQueue, tag_vector &outputvector ) {
-    for (str_queue dump = inputQueue; !dump.empty(); dump.pop())
-    
-        std::cout << dump.front() << std::endl;
+    for (str_queue dump = inputQueue; !dump.empty(); dump.pop()) {
+        string current = dump.front();
+    dump.pop();
+    tagStruct tagS;
 
-    std::cout << "(" << inputQueue.size() << " elements)\n";
+     if (!std::regex_match(current, closingTag)) {
+
+    if(std::regex_match(current, tag) && !std::regex_match(dump.front(), tag)) {
+        // check if the tag has already been added
+        current.replace(0, 1, "");
+        current.replace(current.size()-1, 1, "");
+        bool found= false;
+
+       std::for_each(outputvector.begin(), outputvector.end(), [&found, &dump, &current](tagStruct &tempTag) {
+           if(tempTag.tagName == current) {
+               
+               tempTag.tagText += ":"+dump.front();
+               tempTag.numPairs++;
+               found = true;
+           }
+       });
+
+        //found = false ==>> create a tagstruct and place it into into the vector
+       if(!found) {
+           tagS.numPairs = 1;
+           tagS.tagName = current;
+           tagS.tagText = dump.front();
+           outputvector.push_back(tagS);
+       }
+
+       dump.pop();
+
+       
+    }
+    }
+
+
+    }
+        
+        
 } 
 
 }   

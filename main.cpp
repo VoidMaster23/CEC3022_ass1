@@ -20,16 +20,10 @@ int main(int argc, char* argv[]) {
     SHVNKA005::readFile(fileName, inQueue, outVect);
     SHVNKA005::prepareOutput(inQueue, outVect);
 
-    // std::cout << outVect.size() << std::endl;
-    // for (int i=0; i<outVect.size(); i++){
-    //    std::cout << outVect[i] << std::endl;
-    // }
-
-    
-    // for (str_queue dump = inQueue; !dump.empty(); dump.pop())
-    //     std::cout << dump.front() << std::endl;
-
-    // std::cout << "(" << inQueue.size() << " elements)\n";
+    //std::cout << outVect.size() << std::endl;
+    for (int i=0; i<outVect.size(); i++){
+       std::cout << "\""<< outVect[i].tagName << "\"," << outVect[i].numPairs << ",\"" << outVect[i].tagText  << "\"" << std::endl;
+    }
 
 
     return 0;
