@@ -1,0 +1,18 @@
+#ifndef _DATASTORE_H
+#define _DATASTORE_H
+#include <string>
+#include <vector>
+
+namespace SHVNKA005 {
+    struct tagStruct
+    {
+        std::string tagName;
+        int numPairs;
+        std::string tagText;
+    };
+
+    std::vector<tagStruct> tags;
+    
+}
+
+#endif
