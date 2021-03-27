@@ -8,9 +8,10 @@
 #include <regex>
 #include <algorithm>
 #include <stack>
+#include <cstdlib>
 #define string std::string
 #define str_queue std::queue<string>
-#define tag_vector std::vector<tagStruct>
+#define tag_vector std::vector<SHVNKA005::tagStruct>
 
 
 namespace SHVNKA005 {
@@ -138,5 +139,74 @@ void prepareOutput(str_queue &inputQueue, tag_vector &outputvector ) {
         
 } 
 
+void printAll(tag_vector &outVect) {
+    for (int i=0; i<outVect.size(); i++){
+       std::cout << "\""<< outVect[i].tagName << "\"," << outVect[i].numPairs << ",\"" << outVect[i].tagText  << "\"" << std::endl;
+    }
+}
+
+void dump(tag_vector &outVect){
+    std::ofstream myfile ("tag.txt");
+        if (myfile.is_open()){
+        for (int i=0; i<outVect.size(); i++){
+        myfile << "\""<< outVect[i].tagName << "\"," << outVect[i].numPairs << ",\"" << outVect[i].tagText  << "\"" << std::endl;
+    }
+         myfile.close();
+  }
+  else std::cerr << "Unable to open file";
+}
+
+void list(tag_vector &outVect, string input) {
+    bool found = false;
+    std::for_each(outVect.begin(), outVect.end(), [&found, &input](tagStruct &tempTag) {
+           if(tempTag.tagName == input) {
+               found = true;
+               std::cout << "\""<< tempTag.tagName << "\"," << tempTag.numPairs << ",\"" << tempTag.tagText  << "\"" << std::endl;
+           }
+       });
+
+    if (!found) {
+        std::cout << "No tag named " << input << " exists."<< std::endl; 
+    }
+}
+
+
+void menu(string fileName) {
+    tagStruct test;
+    str_queue inQueue;
+    tag_vector outVect;
+    char command;
+
+    for(;;) {
+        std::cout << "TAG PARSER" << std::endl;
+        std::cout << "Enter an option (r,p,d,l) or q to quit, and press return/enter" << std::endl;
+        std::cout << "r: Read and process tag file" << std::endl;
+        std::cout << "p: Print all tags" << std::endl;
+        std::cout << "d: dump tags and data to tag.txt" << std::endl;
+        std::cout << "l: list/print tag tata for a given tag" << std::endl;
+        std::cout << "c: clear terminal" << std::endl;
+
+        std::cin >> command;
+        if(command == 'r') {
+            readFile(fileName, inQueue, outVect);
+            prepareOutput(inQueue, outVect);
+    } else if (command == 'p') {
+            printAll(outVect);
+    } else if (command == 'd') {
+            dump(outVect);
+    } else if (command == 'l') {
+            string query;
+            std::cout << "Enter a tag name (remember it is case sensitive)" << std::endl;
+            std::cin >> query;
+            list(outVect, query);
+    } else if (command == 'c') {
+        system("clear");
+    }
+    else if (command == 'q') {
+        break;
+    }
+
+    }
+}
 }   
 

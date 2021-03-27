@@ -10,6 +10,10 @@ namespace SHVNKA005 {
     void readFile(std::string fileName, std::queue<std::string> &inputQueue, std::vector<tagStruct> &outputvector);
     void processLine(std::string line, std::queue<std::string> &inputQueue, std::vector<tagStruct> &outputvector);
     void prepareOutput(std::queue<std::string> &inputQueue, std::vector<tagStruct> &outputvector );
+    void menu(std::string fileName);
+    void printAll(std::vector<tagStruct> &outVect);
+    void dump(std::vector<tagStruct> &outVect);
+    void list(std::vector<tagStruct> &outVect, std::string input);
 
     
 }

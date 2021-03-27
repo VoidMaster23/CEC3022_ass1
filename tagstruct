@@ -10,6 +10,9 @@ namespace SHVNKA005 {
         int numPairs;
         std::string tagText;
     };
+
+    //std::vector<tagStruct> tag_vector;
+    
 }
 
 #endif
