@@ -1,0 +1,18 @@
+
+#ifndef _FUNCTIONS_H
+#define _FUNCTIONS_H
+#include <string>
+#include <queue>
+#include <vector>
+#include "tagstruct"
+namespace SHVNKA005 {
+    
+    void readFile(std::string fileName, std::queue<std::string> &inputQueue, std::vector<std::string> &outputvector);
+    void processLine(std::string line, std::queue<std::string> &inputQueue, std::vector<std::string> &outputvector);
+    void prepareOutput(std::queue<std::string> &inputQueue, std::vector<tagStruct> &outputvector );
+
+    
+}
+
+
+#endif
