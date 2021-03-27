@@ -11,7 +11,7 @@ namespace SHVNKA005 {
         std::string tagText;
     };
 
-    std::vector<tagStruct> tags;
+    //std::vector<tagStruct> tags;
     
 }
 
